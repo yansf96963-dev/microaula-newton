@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Microaula UFERSA — 1ª Lei de Newton</title>
+<style>
+:root{
+  --bg:#07111f; --surface:#0d1b2d; --surface2:#11243a; --card:#102238;
+  --text:#f3f7fb; --muted:#a9bacd; --line:#29415a; --accent:#54d6ff;
+  --accent2:#8ef0c7; --warn:#ffd166; --danger:#ff7b7b; --shadow:0 18px 45px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+#app{min-height:100vh;background:var(--bg);}
+header{position:sticky;top:0;z-index:20;background:rgba(7,17,31,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav{max-width:1050px;margin:auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800}.brandmark{width:34px;height:34px;border-radius:10px;background:var(--accent);color:#06111c;display:grid;place-items:center;font-weight:950}
+.navlinks{display:flex;gap:6px}.navlinks button{border:0;background:transparent;color:var(--muted);padding:9px 10px;border-radius:9px;font-weight:700;cursor:pointer}.navlinks button:hover{background:var(--surface2);color:var(--text)}
+main{max-width:1050px;margin:auto;padding:26px 16px 70px}.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:stretch}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.heroCopy{padding:30px}.eyebrow{display:inline-flex;padding:6px 10px;border-radius:99px;background:#0b2a3c;color:var(--accent);font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:clamp(32px,6vw,60px);line-height:.98;margin:18px 0 14px;letter-spacing:-.04em}h1 span{color:var(--accent)}
+.lead{font-size:17px;line-height:1.65;color:var(--muted);max-width:650px}.quote{margin-top:22px;padding:16px 18px;border-left:3px solid var(--accent);background:var(--surface2);border-radius:0 14px 14px 0;font-weight:800}
+.heroVisual{padding:20px;display:flex;flex-direction:column;justify-content:center;min-height:310px;background:linear-gradient(145deg,#0d2034,#0b1727)}
+.orbit{height:190px;position:relative;overflow:hidden;border-radius:18px;background:#081522;border:1px solid var(--line)}.track{position:absolute;left:7%;right:7%;bottom:38px;height:5px;background:#395269;border-radius:99px}.ball{position:absolute;width:44px;height:44px;border-radius:50%;background:var(--accent);left:18%;bottom:41px;box-shadow:0 0 0 8px rgba(84,214,255,.09),0 8px 25px rgba(84,214,255,.25)}.forceArrow{position:absolute;left:55%;bottom:102px;color:var(--accent2);font-size:13px;font-weight:900}.forceArrow::after{content:"→";font-size:35px;display:block;line-height:1}.legend{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-top:12px}
+section{margin-top:26px}.sectionTitle{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:14px}.sectionTitle h2{margin:0;font-size:25px}.sectionTitle p{margin:0;color:var(--muted);font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.step{padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}.num{font-size:12px;color:var(--accent);font-weight:900}.step h3{margin:9px 0 7px}.step p{margin:0;color:var(--muted);line-height:1.55;font-size:14px}
+.lab{padding:18px}.labGrid{display:grid;grid-template-columns:1.4fr .8fr;gap:16px}.sim{background:#081522;border:1px solid var(--line);border-radius:18px;padding:14px}.canvasWrap{height:300px;position:relative;border-radius:14px;overflow:hidden;background:radial-gradient(circle at 50% 20%,#102c42,#07111f 70%)}canvas{width:100%;height:100%;display:block}.status{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.stat{background:var(--surface2);border:1px solid var(--line);padding:11px;border-radius:12px}.stat small{display:block;color:var(--muted);font-size:11px}.stat strong{font-size:18px}.controls{display:grid;gap:12px}.control{padding:13px 14px;background:var(--surface2);border:1px solid var(--line);border-radius:14px}.controlHead{display:flex;justify-content:space-between;gap:8px;margin-bottom:7px;font-size:13px;font-weight:800}.value{color:var(--accent)}input[type=range]{width:100%;accent-color:var(--accent)}
+.btnrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn{border:1px solid var(--line);background:#152b43;color:var(--text);padding:12px;border-radius:12px;font-weight:900;cursor:pointer}.btn.primary{background:var(--accent);color:#06111c;border-color:var(--accent)}.btn:hover{filter:brightness(1.08)}
+.toggle{display:flex;align-items:center;justify-content:space-between}.switch{width:45px;height:25px;border-radius:99px;background:#31475b;padding:3px;cursor:pointer}.switch i{display:block;width:19px;height:19px;background:#fff;border-radius:50%;transition:.2s}.switch.on{background:#2baf8b}.switch.on i{transform:translateX(20px)}
+.challenge{padding:20px;background:linear-gradient(135deg,#10283a,#102238);border:1px solid #31536b;border-radius:18px}.challenge h3{margin-top:0}.question{font-size:19px;font-weight:900;line-height:1.35}.answers{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px}.answer{padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);font-weight:800;cursor:pointer}.answer.correct{border-color:var(--accent2);background:#10362f}.answer.wrong{border-color:var(--danger);background:#3a1e25}.feedback{margin-top:12px;color:var(--muted);line-height:1.5}
+.qrPanel{padding:26px;text-align:center;display:grid;grid-template-columns:1fr 260px;gap:24px;align-items:center}.qrbox{background:#fff;padding:16px;border-radius:18px;width:230px;height:230px;margin:auto;display:grid;place-items:center}.qrbox img{width:100%;height:100%;image-rendering:pixelated}.small{font-size:12px;color:var(--muted);line-height:1.5}.urlInput{width:100%;padding:12px;border-radius:11px;border:1px solid var(--line);background:#081522;color:var(--text);margin-top:10px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 10px}.ufersa{color:var(--accent);font-weight:900}
+@media(max-width:780px){.hero,.labGrid,.qrPanel{grid-template-columns:1fr}.heroVisual{min-height:250px}.steps{grid-template-columns:1fr}.status{grid-template-columns:repeat(2,1fr)}.answers{grid-template-columns:1fr}.navlinks button{display:none}.qrbox{width:210px;height:210px}.heroCopy{padding:24px}}
+</style>
+</head>
+<body>
+<div id="app">
+<header><div class="nav"><div class="brand"><div class="brandmark">N</div><div>UFERSA • Física</div></div><div class="navlinks"><button onclick="go('aula')">Microaula</button><button onclick="go('lab')">Laboratório</button><button onclick="go('qr')">QR Code</button></div></div></header>
+<main>
+<section id="aula" class="hero">
+  <div class="panel heroCopy"><span class="eyebrow">Microaula interativa</span><h1>1ª Lei de <span>Newton</span></h1><p class="lead">Lei da Inércia: um corpo mantém seu estado de repouso ou de movimento retilíneo uniforme quando a <strong>força resultante</strong> sobre ele é nula.</p><div class="quote">“Sem força resultante, não há mudança de velocidade.”</div></div>
+  <div class="panel heroVisual"><div class="orbit"><div class="track"></div><div class="ball"></div><div class="forceArrow">força resultante = 0</div></div><div class="legend"><span>repouso</span><strong>ou movimento uniforme</strong><span>→</span></div></div>
+</section>
+<section><div class="sectionTitle"><h2>Roteiro da microaula</h2><p>3 momentos para conduzir a turma</p></div><div class="steps">
+<div class="step"><div class="num">01 • PREVER</div><h3>Faça a pergunta</h3><p>“Se eu parar de empurrar um objeto, ele necessariamente vai parar?” Peça uma justificativa antes de mostrar a resposta.</p></div>
+<div class="step"><div class="num">02 • EXPLICAR</div><h3>Apresente a lei</h3><p>Explique que a força resultante zero significa aceleração zero. A velocidade permanece constante.</p></div>
+<div class="step"><div class="num">03 • TESTAR</div><h3>Abra o laboratório</h3><p>Projete o QR Code e deixe os estudantes alterarem os parâmetros para testar suas próprias hipóteses.</p></div>
+</div></section>
+<section id="lab"><div class="sectionTitle"><h2>Laboratório virtual</h2><p>Experimente e observe</p></div><div class="panel lab"><div class="labGrid"><div class="sim"><div class="canvasWrap"><canvas id="sim"></canvas></div><div class="status"><div class="stat"><small>Força resultante</small><strong id="sF">0,0 N</strong></div><div class="stat"><small>Velocidade</small><strong id="sV">4,0 m/s</strong></div><div class="stat"><small>Aceleração</small><strong id="sA">0,0 m/s²</strong></div><div class="stat"><small>Estado</small><strong id="sState">MRU</strong></div></div></div>
+<div class="controls">
+<div class="control"><div class="controlHead"><span>Força aplicada</span><span class="value" id="fVal">0 N</span></div><input id="force" type="range" min="-10" max="10" step="0.5" value="0"></div>
+<div class="control"><div class="controlHead"><span>Massa</span><span class="value" id="mVal">2 kg</span></div><input id="mass" type="range" min="1" max="10" step="1" value="2"></div>
+<div class="control"><div class="controlHead"><span>Velocidade inicial</span><span class="value" id="vVal">4,0 m/s</span></div><input id="vel" type="range" min="-8" max="8" step="0.5" value="4"></div>
+<div class="control"><div class="toggle"><span>Simular atrito</span><div id="friction" class="switch" role="switch" aria-checked="false"><i></i></div></div><div class="small">Quando ligado, uma força de atrito se opõe ao movimento.</div></div>
+<div class="btnrow"><button class="btn primary" id="play">▶ Iniciar</button><button class="btn" id="reset">↺ Reiniciar</button></div>
+</div></div></div></section>
+<section><div class="challenge"><div class="num">DESAFIO PARA A TURMA</div><h3 class="question">Um carrinho está andando a 4 m/s. A força resultante passa a ser 0 N. O que acontece?</h3><div class="answers"><button class="answer" data-ok="true">Continua a 4 m/s</button><button class="answer">Para imediatamente</button><button class="answer">Acelera sozinho</button></div><div id="feedback" class="feedback">Escolha uma resposta e depois teste no laboratório.</div></div></section>
+<section id="qr"><div class="sectionTitle"><h2>Leve a experiência para o celular</h2><p>tela final para projetor ou slide</p></div><div class="panel qrPanel"><div><span class="eyebrow">QR • laboratório</span><h2>Agora é a vez de vocês.</h2><p class="lead">Aponte a câmera do celular para o QR Code e explore a simulação. Teste primeiro com força resultante zero; depois aplique uma força e observe o que muda.</p><p class="small"><strong>Observação:</strong> este preview ainda não está publicado na internet. O QR abaixo é demonstrativo; ao publicar a página, substitua o endereço pelo link público da simulação.</p><input class="urlInput" value="https://example.com/microaula-newton" aria-label="Endereço que o QR Code representa" readonly></div><div><div class="qrbox"><img id="qr" alt="QR Code demonstrativo"></div><div class="small" style="margin-top:8px">QR Code demonstrativo</div></div></div></section>
+<footer><span class="ufersa">UFERSA</span> • Ensino de Física • 1ª Lei de Newton • Laboratório virtual</footer>
+</main>
+</div>
+<script>
+const canvas=document.getElementById('sim'),ctx=canvas.getContext('2d');let running=false,last=0,x=0.35,v=4,m=2,F=0,friction=false;
+function fit(){const r=canvas.getBoundingClientRect(),d=devicePixelRatio||1;canvas.width=r.width*d;canvas.height=r.height*d;ctx.setTransform(d,0,0,d,0,0)}addEventListener('resize',fit);fit();
+const $=id=>document.getElementById(id);
+function fmt(n){return n.toFixed(1).replace('.',',')}
+function updateLabels(){F=+$('force').value;m=+$('mass').value;if(!running)v=+$('vel').value;$('fVal').textContent=fmt(F)+' N';$('mVal').textContent=m+' kg';$('vVal').textContent=fmt(+$('vel').value)+' m/s'}
+['force','mass','vel'].forEach(id=>$(id).addEventListener('input',updateLabels));
+$('friction').onclick=()=>{friction=!friction;$('friction').classList.toggle('on',friction);$('friction').setAttribute('aria-checked',friction)};
+$('play').onclick=()=>{running=!running;$('play').textContent=running?'⏸ Pausar':'▶ Iniciar';if(running){last=performance.now();requestAnimationFrame(loop)}};
+$('reset').onclick=()=>{running=false;$('play').textContent='▶ Iniciar';x=.35;v=+$('vel').value;draw();stats(0)};
+function loop(t){if(!running)return;let dt=Math.min((t-last)/1000,.04);last=t;let resist=friction?0.8*Math.sign(v):0;let net=F-resist;let a=net/m;v+=a*dt;x+=v*dt/12;if(x>1.05)x=-.05;if(x<-.05)x=1.05;draw();stats(a);requestAnimationFrame(loop)}
+function stats(a=0){$('sF').textContent=fmt(F-(friction?0.8*Math.sign(v):0))+' N';$('sV').textContent=fmt(v)+' m/s';$('sA').textContent=fmt(a)+' m/s²';$('sState').textContent=Math.abs(a)<.02?(Math.abs(v)<.05?'Repouso':'MRU'):'Acelerado'}
+function draw(){const w=canvas.clientWidth,h=canvas.clientHeight;ctx.clearRect(0,0,w,h);ctx.strokeStyle='#29415a';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(30,h-55);ctx.lineTo(w-30,h-55);ctx.stroke();const bx=30+x*(w-60),by=h-80;ctx.fillStyle='#54d6ff';ctx.beginPath();ctx.arc(bx,by,25,0,Math.PI*2);ctx.fill();ctx.fillStyle='#06111c';ctx.font='bold 14px system-ui';ctx.textAlign='center';ctx.fillText('m',bx,by+5);ctx.fillStyle='#a9bacd';ctx.font='12px system-ui';ctx.textAlign='left';ctx.fillText('posição',30,25);if(Math.abs(F)>0.01){ctx.strokeStyle='#8ef0c7';ctx.lineWidth=4;let dir=Math.sign(F),len=Math.min(90,20+Math.abs(F)*6);ctx.beginPath();ctx.moveTo(bx,by-42);ctx.lineTo(bx+dir*len,by-42);ctx.stroke();ctx.fillStyle='#8ef0c7';ctx.fillText('força aplicada',Math.max(30,bx+dir*len-30),by-55)}}
+function go(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+updateLabels();draw();stats(0);
+const answers=document.querySelectorAll('.answer');answers.forEach(b=>b.onclick=()=>{answers.forEach(x=>x.classList.remove('correct','wrong'));if(b.dataset.ok){b.classList.add('correct');$('feedback').textContent='Correto. Se a força resultante é zero, a aceleração é zero: o carrinho mantém sua velocidade (ou permanece em repouso, se já estivesse parado). Agora teste isso no laboratório.'}else{b.classList.add('wrong');$('feedback').textContent='Observe a 1ª Lei novamente: força resultante zero não significa “velocidade zero”. Significa aceleração zero. Teste com velocidade inicial diferente de zero.'}});
+// QR demonstrativo gerado por um endpoint visual estático não é usado; o SVG abaixo representa um padrão fixo e o texto codificado é o endereço de exemplo.
+const qrSvg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 210"><rect width="210" height="210" fill="white"/><g fill="#000"><path d="M10 10h60v60H10zM20 20v40h40V20zM30 30h20v20H30zM140 10h60v60h-60zM150 20v40h40V20zM160 30h20v20h-20zM10 140h60v60H10zM20 150v40h40v-40zM30 160h20v20H30z"/><path d="M85 10h10v10H85zM105 10h10v20h-10zM80 35h20v10H80zM110 40h15v10h-15zM75 55h15v20H75zM100 60h10v15h-10zM125 80h15v10h-15zM145 85h10v20h-10zM165 80h10v15h-10zM185 85h15v10h-15zM80 85h20v10H80zM105 90h10v25h-10zM75 105h15v10H75zM85 120h25v10H85zM120 110h20v10h-20zM150 115h10v20h-10zM170 105h20v10h-20zM195 115h5v25h-5zM75 140h15v10H75zM95 140h10v20H95zM115 135h15v15h-15zM135 145h20v10h-20zM165 140h15v20h-15zM185 145h15v10h-15zM80 170h10v20H80zM100 165h20v10h-20zM125 170h10v25h-10zM145 165h10v15h-10zM160 180h25v10h-25zM190 165h10v30h-10z"/></g></svg>`;
+$('qr').src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(qrSvg);
+</script>
+</body></html>
